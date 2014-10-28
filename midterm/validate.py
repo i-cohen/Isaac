@@ -40,8 +40,8 @@ def programs(n):
 
 def defaultAssigns(p):
     return \
-      {'AssignArray':[\
-        {'Variable':['a']}, {'Number':[1]}, {'Number':[1]}, {'Number':[1]}, p\
+      {'Assign':[\
+        {'Variable':['a']}, {'Number':[2]}, {'Number':[2]}, {'Number':[2]}, p\
       ]}
 
 # Compute the formula that defines correct behavior for the

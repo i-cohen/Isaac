@@ -1,4 +1,4 @@
-import parse
+import parse, interpret, compile, analyze
 
 def check(name, function, inputs_result_pairs):
     def str_(s): return '"'+str(s)+'"' if type(s) == str else str(s)
@@ -30,6 +30,48 @@ print("Problem #1, tokenizeAndParse()...")
 try: parse.tokenizeAndParse
 except: print("The tokenizeAndParse() function is not defined.")
 else: check('program', parse.tokenizeAndParse, [\
-    (["print true ;"], ({'Print': ['True', 'End']}, [])),\
+    (["print true ;"], ({'Print': ['True', 'End']})),\
+    (["print 5 ;"], ({'Print': [{'Number': [5]}, 'End']})),\
+    (['assign a := [1+2,4,6]; print @ a [ 0 ] ; for a {print true ;}'], ({'Assign':[{'Variable':['a']}, {'Plus':[{'Number':[1]},{'Number':[2]}]}, {'Number':[4]}, {'Number':[6]},{'Print': [{'Array': [{'Variable':['a']},{'Number':[0]}]}, {'For': [{'Variable':['a']},{'Print': ['True', 'End']},'End']} ]} ]}))
     ])
 
+print("Problem #2, interpret...")
+try: interpret.interpret
+except: print("The interpret() function is not defined.")
+else: check('interpret', interpret.interpret, [\
+    (["print 123;"], [123]),\
+    (["print false; print true; print 4;"], [False, True, 4]),\
+    (["assign a := [1+2,4,6]; print @ a [0]; print @ a[1]; print @ a[2] ;"], [3,4,6]),\
+    (["for x {print true;}"], [True, True, True]),\
+    (["for x {print x;}"], [0, 1, 2]),\
+    (["assign a := [1+2,4,6]; for x { print @ a[x] + @ a[x] ;}"], [6,8,12]),\
+    (["assign a := [1,2,true]; print @ a[1];"], None )
+    ])
+
+print("Problem #3, compile...")
+try: compile.compileAndSimulate
+except: print("The compile() function is not defined.")
+else: check('compile', compile.compileAndSimulate, [\
+    (["print 123;"], [123]),\
+    (["print false; print true; print 4;"], [False, True, 4]),\
+    (["assign a := [1+2,4,6]; print @ a [0]; print @ a[1]; print @ a[2] ;"], [3,4,6]),\
+    (["for x {print true;}"], [True, True, True]),\
+    (["for x {print x;}"], [0, 1, 2]),\
+    (["assign a := [1+2,4,6]; for x { print @ a[x] + @ a[x] ;}"], [6,8,12]),\
+    (["assign a := [1,2,true];"], None)
+    ])
+
+print("Problem #4, Analyze...")
+try: analyze.helper
+except: print("The compile() function is not defined.")
+else: check('analyze', analyze.helper, [\
+    (["print 123;"], 'Void'),\
+    (["print false; print true; print 4;"], 'Void'),\
+    (["assign a := [1+2,4,6]; print @ a [0]; print @ a[1]; print @ a[2] ;"], 'Void'),\
+    (["for x {print true;}"], 'Void'),\
+    (["for x {print x;}"], 'Void'),\
+    (["assign a := [1+2,4,6]; for x { print @ a[x] + @ a[x] ;}"], 'Void'),\
+    (["assign a := [1,2,true];"], None),\
+    (["print true + true;"], None),\
+    (["assign a := [1,2,3]; print @ a[true];"], None),\
+    ])

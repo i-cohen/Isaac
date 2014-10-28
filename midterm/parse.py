@@ -36,7 +36,7 @@ def leftExpression(tmp, top = True):
     r = parse([\
         ('True', ['true']),\
         ('False', ['false']),\
-        ('Array',['@',variable,';',expression])
+        ('Array',['@',variable,'[',expression,']'])
         ], tmp, top)
     if not r is None:
         return r
@@ -65,7 +65,7 @@ def program(tmp, top = True):
 
 
 def tokenizeAndParse(s):
-    tokens = re.split(r"(\s+|assign|:=|print|\+|if|[|]|while|{|}|;|true|false|call|procedure|not|and|or|\(|\))", s)
+    tokens = re.split(r"(\s+|assign|:=|print|\+|\[|\]|,|{|}|;|true|false|\(|\))", s)
     tokens = [t for t in tokens if not t.isspace() and not t == ""]
     (p, tokens) = program(tokens)
     return p
