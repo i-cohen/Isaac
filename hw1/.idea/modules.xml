@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/hw1.iml" filepath="$PROJECT_DIR$/.idea/hw1.iml" />
       <module fileurl="file://$PROJECT_DIR$/../hw3/.idea/hw3.iml" filepath="$PROJECT_DIR$/../hw3/.idea/hw3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../hw4/.idea/hw4.iml" filepath="$PROJECT_DIR$/../hw4/.idea/hw4.iml" />
       <module fileurl="file://$PROJECT_DIR$/../midterm/.idea/midterm.iml" filepath="$PROJECT_DIR$/../midterm/.idea/midterm.iml" />
     </modules>
   </component>

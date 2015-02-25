@@ -27,7 +27,7 @@ def evaluate(env, e):
                     exit()
             if label == 'Number':
                 x = children[0]
-                return x
+                return int(x)
             elif label == 'Plus':
                 x = children[0]
                 f1 = evaluate(env,x)

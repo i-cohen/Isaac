@@ -45,6 +45,8 @@ else: check('interpret', interpret.interpret, [\
     (["for x {print true;}"], [True, True, True]),\
     (["for x {print x;}"], [0, 1, 2]),\
     (["assign a := [1+2,4,6]; for x { print @ a[x] + @ a[x] ;}"], [6,8,12]),\
+    (["assign x := [3,4,5]; assign y := [10,11,12]; for z {print @ x[z] + @ y[z]; print 2;} print true; print false;"], [13,2,15,2,17,2,True,False]),\
+    (["for a {print true; for b{print false;}}"],[True,False,False,False,True,False,False,False,True,False,False,False]),\
     (["assign a := [1,2,true]; print @ a[1];"], None )
     ])
 
@@ -55,9 +57,13 @@ else: check('compile', compile.compileAndSimulate, [\
     (["print 123;"], [123]),\
     (["print false; print true; print 4;"], [False, True, 4]),\
     (["assign a := [1+2,4,6]; print @ a [0]; print @ a[1]; print @ a[2] ;"], [3,4,6]),\
-    (["for x {print true;}"], [True, True, True]),\
+    (["for x {print true;}"], [1, True, True]),\
     (["for x {print x;}"], [0, 1, 2]),\
     (["assign a := [1+2,4,6]; for x { print @ a[x] + @ a[x] ;}"], [6,8,12]),\
+    (["assign x := [3,4,5]; assign y := [10,11,12]; for z {print @ x[z] + @ y[z]; print 2;} print true; print false;"], [13,2,15,2,17,2,1,False]),\
+    (["for a {print true; for b{print false;}}"],[True,False,False,False,True,False,False,False,True,False,False,False]),\
+    (["assign a:= [4,5,6]; for b {print @ a[0]; assign a := [8,5,6];} print @ a[0];print @ a[1];"],[4,8,8,8,5]),\
+    #(["assign a := [2,2,2]; for c { print @ a[2]; assign a [false, false, false];} print @ a[2]; "],[2,False, False, False]),\
     (["assign a := [1,2,true];"], None)
     ])
 
@@ -71,6 +77,7 @@ else: check('analyze', analyze.helper, [\
     (["for x {print true;}"], 'Void'),\
     (["for x {print x;}"], 'Void'),\
     (["assign a := [1+2,4,6]; for x { print @ a[x] + @ a[x] ;}"], 'Void'),\
+    (["assign x := [3,4,5]; assign y := [10,11,12]; for z {print @ x[z] + @ y[z];} print true; print false;"], 'Void'),\
     (["assign a := [1,2,true];"], None),\
     (["print true + true;"], None),\
     (["assign a := [1,2,3]; print @ a[true];"], None),\

@@ -5,20 +5,24 @@
 # validate.py
 #
 #  ****************************************************************
-#  *************** Modify this file for Problem #5. ***************
+#  *************** Modify this cd file for Problem #5. ***************
 #  ****************************************************************
 #
 
 exec(open('interpret.py').read())
 exec(open('compile.py').read())
+exec(open('optimize.py').read())
 
 def expressions(n):
     if n <= 0:
         []
     elif n == 1:
-        return [] # Add base case(s) for Problem #5.
+        return ['True', 'False', {'Number':['2']} ] # Add base case(s) for Problem #5.
     else:
-        pass # Add recursive case(s) for Problem #5.
+        es = expressions(n-1)
+        esN = []
+        esN += [{'Array': [{'Variable':['a']}, e]} for e in es if type(e)== dict]
+        return es +esN  # Add recursive case(s) for Problem #5.
 
 def programs(n):
     if n <= 0:
@@ -29,9 +33,11 @@ def programs(n):
         ps = programs(n-1)
         es = expressions(n-1)
         psN = []
-        psN += [{'Assign':[{'Variable':['a']}, e, e, e, p]} for p in ps for e in es]
+        psN += [{'Assign':[{'Variable':['a']}, e, e, e, p]} for p in ps for e in es if type(e)==dict ]
+        psN += [{'Print': [e,p]} for e in es for p in ps]
+        psN += [{'For': [{'Variable':['c']},p,p]} for p in ps]
         
-        pass # Add more nodes to psN for Problem #5.
+        # Add more nodes to psN for Problem #5.
         
         return ps + psN
 
@@ -52,7 +58,9 @@ def defaultAssigns(p):
 
 for p in [defaultAssigns(p) for p in programs(4)]:
     try:
-        if simulate(compileProgram({}, p)[1]) != execute({}, p)[1]:
+        if simulate(compileProgram({}, unrollLoops(p))[1]) != execute({}, p)[1]:
+            print(simulate(compileProgram({}, unrollLoops(p))[1]))
+            print(execute({}, p)[1])
             print('\nIncorrect behavior on: ' + str(p))
     except:
         print('\nError on: ' + str(p))
