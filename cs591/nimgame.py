@@ -61,28 +61,37 @@ def ai(nimGame):
 
 
 
+def mulNimAdd(list):
+    last=0
+    for x in list:
+        x= int(x)
+        last =nimAdd(last,x)
+    print (last)
 
+while True:
+     choice = input('num,num,num...')
+     choice = choice.split(',')
+     mulNimAdd(choice)
 
-
-while totalChips > 0:
-    printGame(nimGame)
-    print(findNim(nimGame))
-    choice = input('please choose pile and amount (format pile:amount)')
-    choice = choice.split(':')
-    choice[0] = int(choice[0])
-    choice[1] = int(choice[1])
-    nimGame[choice[0]] -= choice[1]
-    totalChips = sum(nimGame)
-    if totalChips <1:
-        print( 'you win')
-        break
-    nimGame = ai(nimGame)
-    totalChips = sum(nimGame)
-    #printGame(nimGame)
-    if totalChips <1:
-        print( 'I win')
-        break
-
+# while totalChips > 0:
+#     printGame(nimGame)
+#     print(findNim(nimGame))
+#     choice = input('please choose pile and amount (format pile:amount)')
+#     choice = choice.split(':')
+#     choice[0] = int(choice[0])
+#     choice[1] = int(choice[1])
+#     nimGame[choice[0]] -= choice[1]
+#     totalChips = sum(nimGame)
+#     if totalChips <1:
+#         print( 'you win')
+#         break
+#     nimGame = ai(nimGame)
+#     totalChips = sum(nimGame)
+#     #printGame(nimGame)
+#     if totalChips <1:
+#         print( 'I win')
+#         break
+#
 
 
 
